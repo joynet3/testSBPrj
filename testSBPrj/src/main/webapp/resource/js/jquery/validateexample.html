@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery validation plug-in - main demo</title>
+	<link rel="stylesheet" href="css/screen.css">
+	<script src="../lib/jquery.js"></script>
+	<script src="../dist/jquery.validate.js"></script>
+	<script>
+	$.validator.setDefaults({
+		submitHandler: function() {
+			alert("submitted!");
+		}
+	});
+
+	$().ready(function() {
+		// validate the comment form when it is submitted
+		$("#commentForm").validate();
+
+		// validate signup form on keyup and submit
+		$("#signupForm").validate({
+			rules: {
+				firstname: "required",
+				lastname: "required",
+				username: {
+					required: true,
+					minlength: 2
+				},
+				password: {
+					required: true,
+					minlength: 5
+				},
+				confirm_password: {
+					required: true,
+					minlength: 5,
+					equalTo: "#password"
+				},
+				email: {
+					required: true,
+					email: true
+				},
+				topic: {
+					required: "#newsletter:checked",
+					minlength: 2
+				},
+				agree: "required"
+			},
+			messages: {
+				firstname: "Please enter your firstname",
+				lastname: "Please enter your lastname",
+				username: {
+					required: "Please enter a username",
+					minlength: "Your username must consist of at least 2 characters"
+				},
+				password: {
+					required: "Please provide a password",
+					minlength: "Your password must be at least 5 characters long"
+				},
+				confirm_password: {
+					required: "Please provide a password",
+					minlength: "Your password must be at least 5 characters long",
+					equalTo: "Please enter the same password as above"
+				},
+				email: "Please enter a valid email address",
+				agree: "Please accept our policy",
+				topic: "Please select at least 2 topics"
+			}
+		});
+		
+		
+		
+    $(document).ready(function () {          
+      //기본형태
+      //$('#registerForm').validate(); //유효성 검사를 적용
+     
+      // validate signup form on keyup and submit
+      //확장옵션
+      $('#registerForm').validate({
+          rules: {
+              txtID:{required:true, minlength:3, remote:"Validate"},
+              txtPassword: "required",
+              txtPasswordConfirm: {required:true, equalTo:'#txtPassword'},               
+              txtName: {required:true},
+              txtEmail: {required:true, email:true},
+              txtAge: {required:true, range:[1,100]} // 1~100범위
+          },
+          messages: {
+              txtID: {
+                   required:"아이디를 입력하시오.",
+                   minlength: jQuery.format("아이디는 {0}자 이상 입력해주세요!"),
+                   remote : jQuery.format("입력하신 {0}는 이미존재하는 아이디입니다. ")
+              },
+              txtPassword:"암호를 입력하시오.",
+              txtPasswordConfirm: {
+                  required: "암호확인를 입력하시오.",
+                  equalTo:"암호를 다시 확인하세요" },
+              txtName: {required:"이름을 입력하시오."},
+              txtEmail: {
+                  required:"이메일을 입력하시오.",
+                  email:"올바른 이메일을 입력하시오."},
+              txtAge: {range: "나이는 1~100"}
+          },
+          submitHandler: function (frm){
+              frm.submit();   //유효성 검사를 통과시 전송
+          },
+          success: function(e){
+              //
+          }
+         
+      });
+    }); //end
